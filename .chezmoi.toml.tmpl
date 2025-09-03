@@ -1,0 +1,23 @@
+{{- $choices := list "linux" "wsl" "mac" "windows" -}}
+{{- $hosttype := promptChoice "What type of host are you on" $choices -}}
+
+{{- $windows_npiperelayPath := "" -}}
+{{- if eq $hosttype "wsl" -}}
+    {{- $windows_npiperelayPath = promptStringOnce . "npiperelayPath" "Path to npiperelay.exe on Windows" -}}
+{{- end -}}
+
+{{- $name := promptStringOnce . "user.git.name" "[GitHub] Name" -}}
+{{- $email := promptStringOnce . "user.git.email" "[GitHub] Email" -}}
+
+[data]
+hosttype = {{ $hosttype | quote }}
+windows_npiperelayPath = {{ $windows_npiperelayPath | quote }}
+
+[data.user.git]
+name = {{ $name | quote }}
+email = {{ $email | quote }}
+
+# chezmoi editor
+[edit]
+command = "code"
+args = ["--wait"]

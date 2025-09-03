@@ -1,0 +1,43 @@
+#!/bin/sh
+
+set -e
+
+echo "Installing packages..."
+
+{{- if eq .chezmoi.os "linux" }}
+
+# Required linux packages
+sudo apt update
+sudo apt install -y \
+    wget \
+    curl \
+    git \
+    build-essential \
+    procps \
+    file
+
+# Install brew
+if ! command -v brew >/dev/null 2>&1; then
+    echo "Homebrew not found, installing..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv 2>/dev/null || true)"
+fi
+
+brew install \
+    fzf \
+    bat \
+    zoxide \
+    antigen \
+    thefuck
+
+# if ~/antigen.zsh does not exists or is empty, download it
+if [ ! -f ~/antigen.zsh ] || [ ! -s ~/antigen.zsh ]; then
+    echo "Downloading antigen..."
+    curl -L git.io/antigen > ~/antigen.zsh
+fi
+
+{{- else }}
+
+echo "{{ .chezmoi.os }} not supported yet!"
+
+{{- end }}

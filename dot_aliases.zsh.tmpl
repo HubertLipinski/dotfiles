@@ -1,0 +1,32 @@
+# Custom aliases 
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# chezmoi dotfiles manager
+alias cm='chezmoi'
+
+# bat - better cat
+alias cat="batcat"
+
+# [WSL] Ctrl + L/R Arrows
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
+
+alias cdi='zi'
+cd() {
+    if [[ $# -eq 0 ]]; then
+        builtin cd ~
+    else
+        # spróbuj użyć zoxide
+        if zoxide query "$1" &>/dev/null; then
+            builtin cd "$(zoxide query "$1")"
+        else
+            builtin cd "$1"
+        fi
+    fi
+}
+
+# [WSL] 1password
+alias 1p-restart='pkill socat 2>/dev/null; rm -f $SSH_AUTH_SOCK; source ~/.wsl-1password-setup'
+alias 1p-kill='pkill socat 2>/dev/null; rm -f $SSH_AUTH_SOCK'
