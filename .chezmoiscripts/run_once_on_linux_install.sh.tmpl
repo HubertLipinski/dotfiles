@@ -14,18 +14,20 @@ sudo apt install -y \
     git \
     build-essential \
     procps \
-    file
+    file \
+    socat \
+    zsh \
+    bat
 
 # Install brew
 if ! command -v brew >/dev/null 2>&1; then
     echo "Homebrew not found, installing..."
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" >> ~/brew-install.log 2>&1
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv 2>/dev/null || true)"
 fi
 
 brew install \
     fzf \
-    bat \
     zoxide \
     antigen \
     thefuck
@@ -35,6 +37,10 @@ if [ ! -f ~/antigen.zsh ] || [ ! -s ~/antigen.zsh ]; then
     echo "Downloading antigen..."
     curl -L git.io/antigen > ~/antigen.zsh
 fi
+
+# Change default shell to zsh
+echo "Changing shell to zsh for $USER"
+chsh -s /bin/zsh $USER
 
 {{- else }}
 

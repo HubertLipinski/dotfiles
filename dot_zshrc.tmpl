@@ -12,6 +12,9 @@ HISTFILE=~/.zsh_history
 
 export PATH="$HOME/bin:$PATH"
 
+# homebrew
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 # setup antigen
 source ~/antigen.zsh
 antigen init ~/.antigenrc
