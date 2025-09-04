@@ -1,0 +1,11 @@
+README.md
+1Password_WSL.md
+
+{{ if ne .chezmoi.os "linux" }}
+**/*.sh
+{{ end }}
+
+{{ if ne .chezmoi.os "windows" }}
+**/*.bat
+**/*.ps1
+{{ end }}

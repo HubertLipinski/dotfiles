@@ -1,5 +1,5 @@
 {{- $choices := list "linux" "wsl" "mac" "windows" -}}
-{{- $hosttype := promptChoice "What type of host are you on" $choices -}}
+{{- $hosttype := promptChoiceOnce . "hosttype" "What type of host are you on" $choices -}}
 
 {{- $windows_npiperelayPath := "" -}}
 {{- if eq $hosttype "wsl" -}}
