@@ -41,8 +41,10 @@ if [ ! -f ~/antigen.zsh ] || [ ! -s ~/antigen.zsh ]; then
 fi
 
 # Change default shell to zsh
-echo "Changing shell to zsh for $USER"
-chsh -s /bin/zsh $USER
+if [ "$SHELL" != "/bin/zsh" ]; then
+    echo "Changing shell to zsh for $USER"
+    chsh -s /bin/zsh $USER
+fi
 
 {{- else }}
 
