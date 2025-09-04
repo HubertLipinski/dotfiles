@@ -1,6 +1,9 @@
- alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+# Next level of an ls
+# https://github.com/eza-community/eza/tree/main?tab=readme-ov-file#command-line-options
+ 
+alias ls="eza --color=always --icons=always --group-directories-first" 
+alias ll="ls -la"
+alias l="ls -la"
 
 # chezmoi dotfiles manager
 alias cm='chezmoi'
@@ -8,6 +11,7 @@ alias cm='chezmoi'
 # bat - better cat
 alias cat="batcat"
 
+alias c="clear"
 alias ws="webstorm"
 
 {{- if eq .hosttype "wsl" }}
@@ -17,7 +21,7 @@ bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
 
 # Zoxide fix for WSL
-alias cdi='zi'
+alias cdi="zi"
 cd() {
     if [[ $# -eq 0 ]]; then
         builtin cd ~
