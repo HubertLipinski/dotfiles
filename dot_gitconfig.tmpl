@@ -3,7 +3,7 @@
 	name = {{ .user.git.name }}
 
 [core]
-	sshCommand = ssh.exe
+{{ template "git-ssh-command.tmpl" . }}
 
 [init]
 	defaultBranch = main

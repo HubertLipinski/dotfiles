@@ -1,0 +1,18 @@
+# eza - better ls
+# https://github.com/eza-community/eza/tree/main?tab=readme-ov-file#command-line-options
+alias ls="eza --color=always --icons=always --group-directories-first"
+alias ll="ls -la"
+alias l="ls -la"
+
+# chezmoi dotfiles manager
+alias cm='chezmoi'
+
+# bat - better cat
+{{- if eq .hosttype "linux" "wsl" }}
+alias cat="batcat"
+{{- else }}
+alias cat="bat"
+{{- end }}
+
+alias c="clear"
+alias ws="webstorm"

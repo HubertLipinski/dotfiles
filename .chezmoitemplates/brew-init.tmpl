@@ -1,0 +1,5 @@
+{{- if eq .hosttype "linux" "wsl" }}
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+{{- else if eq .hosttype "mac" }}
+eval "$(/opt/homebrew/bin/brew shellenv)"
+{{- end }}

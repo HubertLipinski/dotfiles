@@ -1,0 +1,10 @@
+{{- if eq .hosttype "wsl" }}
+
+# Ctrl + L/R Arrows
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
+
+# 1password misc
+alias 1p-restart='pkill socat 2>/dev/null; rm -f $SSH_AUTH_SOCK; source ~/.1password-setup.zsh'
+alias 1p-kill='pkill socat 2>/dev/null; rm -f $SSH_AUTH_SOCK'
+{{- end }}

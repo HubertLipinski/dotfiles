@@ -34,16 +34,13 @@ brew install \
     fd \
     eza
 
-# if ~/antigen.zsh does not exists or is empty, download it
-if [ ! -f ~/antigen.zsh ] || [ ! -s ~/antigen.zsh ]; then
-    echo "Downloading antigen..."
-    curl -L git.io/antigen > ~/antigen.zsh
-fi
+# Symlink antigen from brew (no separate download needed)
+ln -sf "$(brew --prefix)/share/antigen/antigen.zsh" ~/antigen.zsh
 
 # Change default shell to zsh
-if [ "$SHELL" != "/bin/zsh" ]; then
+if [ "$SHELL" != "$(which zsh)" ]; then
     echo "Changing shell to zsh for $USER"
-    chsh -s /bin/zsh $USER
+    chsh -s "$(which zsh)" "$USER"
 fi
 
 {{- else }}

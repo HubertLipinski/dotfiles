@@ -9,3 +9,11 @@ README.md
 **/*.bat
 **/*.ps1
 {{ end }}
+
+{{ if eq .chezmoi.os "windows" }}
+dot_zshrc.tmpl
+dot_aliases.zsh.tmpl
+dot_antigenrc.tmpl
+dot_p10k.zsh
+dot_1password-setup.zsh.tmpl
+{{ end }}
