@@ -38,9 +38,14 @@ brew install \
 ln -sf "$(brew --prefix)/share/antigen/antigen.zsh" ~/antigen.zsh
 
 # Change default shell to zsh
-if [ "$SHELL" != "$(which zsh)" ]; then
+ZSH_PATH=$(which zsh)
+if [ "$SHELL" != "$ZSH_PATH" ]; then
+    # Add zsh to /etc/shells if not present (needed for brew's zsh)
+    if ! grep -qx "$ZSH_PATH" /etc/shells; then
+        echo "$ZSH_PATH" | sudo tee -a /etc/shells
+    fi
     echo "Changing shell to zsh for $USER"
-    chsh -s "$(which zsh)" "$USER"
+    chsh -s "$ZSH_PATH" "$USER"
 fi
 
 {{- else }}
