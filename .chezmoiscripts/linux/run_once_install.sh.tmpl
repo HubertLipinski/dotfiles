@@ -42,13 +42,16 @@ fi
 export PATH="$HOME/.local/share/fnm:$PATH"
 fnm install --lts
 fnm default lts-latest
-export PATH="$(fnm exec --using=default -- dirname $(which node)):$PATH"
+eval "$(fnm env --shell bash)"
 
 # Install Claude Code
 npm install -g @anthropic-ai/claude-code
 
 # Symlink antigen from brew (no separate download needed)
 ln -sf "$(brew --prefix)/share/antigen/antigen.zsh" ~/antigen.zsh
+
+# Create antigen cache dir (prevents docker plugin cp error on first run)
+mkdir -p ~/.antigen/bundles/robbyrussell/oh-my-zsh/cache/completions
 
 # Change default shell to zsh
 ZSH_PATH=$(which zsh)
