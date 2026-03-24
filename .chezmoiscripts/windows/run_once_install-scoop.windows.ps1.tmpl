@@ -1,5 +1,3 @@
-
-
 if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
     Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
@@ -7,3 +5,20 @@ if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
     Write-Host "Scoop is already installed, skipping..."
 }
 
+# Install packages
+$packages = @("fzf", "fd", "eza", "bat", "fnm")
+foreach ($pkg in $packages) {
+    if (-not (Get-Command $pkg -ErrorAction SilentlyContinue)) {
+        Write-Host "Installing $pkg..."
+        scoop install $pkg
+    } else {
+        Write-Host "$pkg is already installed, skipping..."
+    }
+}
+
+# Install Node.js via fnm
+fnm install --lts
+fnm default lts-latest
+
+# Install Claude Code
+npm install -g @anthropic-ai/claude-code

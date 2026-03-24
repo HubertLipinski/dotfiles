@@ -1,0 +1,45 @@
+#!/bin/sh
+
+set -e
+
+echo "Installing packages..."
+
+{{- if eq .chezmoi.os "darwin" }}
+
+# Install brew
+if ! command -v brew >/dev/null 2>&1; then
+    echo "Homebrew not found, installing..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || true)"
+fi
+
+brew install \
+    fzf \
+    zoxide \
+    antigen \
+    thefuck \
+    fd \
+    eza \
+    bat
+
+# Install fnm (fast node manager)
+if ! command -v fnm >/dev/null 2>&1; then
+    echo "Installing fnm..."
+    curl -fsSL https://fnm.vercel.app/install | bash
+fi
+export PATH="$HOME/.local/share/fnm:$PATH"
+eval "$(fnm env)"
+fnm install --lts
+fnm default lts-latest
+
+# Install Claude Code
+npm install -g @anthropic-ai/claude-code
+
+# Symlink antigen from brew (no separate download needed)
+ln -sf "$(brew --prefix)/share/antigen/antigen.zsh" ~/antigen.zsh
+
+{{- else }}
+
+echo "{{ .chezmoi.os }} not supported by this script!"
+
+{{- end }}

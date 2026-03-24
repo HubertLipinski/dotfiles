@@ -17,7 +17,9 @@ windows_npiperelayPath = {{ $windows_npiperelayPath | quote }}
 name = {{ $name | quote }}
 email = {{ $email | quote }}
 
+{{ if lookPath "code" -}}
 # chezmoi editor
 [edit]
 command = "code"
 args = ["--wait"]
+{{- end }}
