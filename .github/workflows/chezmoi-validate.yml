@@ -20,7 +20,7 @@ jobs:
             os: windows
     name: Validate templates (${{ matrix.hosttype }})
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install chezmoi
         run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
