@@ -1,0 +1,58 @@
+name: Validate chezmoi templates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - hosttype: linux
+            os: linux
+          - hosttype: wsl
+            os: linux
+          - hosttype: mac
+            os: darwin
+          - hosttype: windows
+            os: windows
+    name: Validate templates (${{ matrix.hosttype }})
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+
+      - name: Create chezmoi config
+        run: |
+          mkdir -p ~/.config/chezmoi
+          cat > ~/.config/chezmoi/chezmoi.toml <<'TOML'
+          [data]
+          hosttype = "${{ matrix.hosttype }}"
+          windows_npiperelayPath = "/mnt/c/tools/npiperelay.exe"
+
+          [data.user.git]
+          name = "Test User"
+          email = "test@example.com"
+          TOML
+
+      - name: Validate templates
+        run: |
+          echo "=== Validating templates for hosttype=${{ matrix.hosttype }} ==="
+          failed=0
+          for target in ~/.zshrc ~/.aliases.zsh ~/.gitconfig ~/.1password-setup.zsh ~/.antigenrc; do
+            name=$(basename "$target")
+            if chezmoi --source="${PWD}" cat "$target" > /dev/null 2>&1; then
+              echo "$name OK"
+            else
+              echo "$name FAILED"
+              chezmoi --source="${PWD}" cat "$target" 2>&1 || true
+              failed=1
+            fi
+          done
+          if [ $failed -eq 0 ]; then
+            echo "=== All templates valid ==="
+          fi
+          exit $failed
