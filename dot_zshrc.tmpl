@@ -5,12 +5,18 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Keep 5000 lines of history within the shell and save it to ~/.zsh_history:
+# History
 HISTSIZE=5000
 SAVEHIST=5000
 HISTFILE=~/.zsh_history
+setopt HIST_IGNORE_ALL_DUPS
+setopt SHARE_HISTORY
+setopt HIST_REDUCE_BLANKS
 
 export PATH="$HOME/bin:$PATH"
+
+# fnm
+{{ template "fnm-init.tmpl" . }}
 
 # Homebrew
 {{ template "brew-init.tmpl" . }}

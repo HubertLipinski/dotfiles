@@ -1,2 +1,6 @@
-# Initialize thefuck
-eval "$(thefuck --alias)"
+# Lazy-load thefuck (saves ~200-300ms on shell startup)
+fuck() {
+    unset -f fuck
+    eval "$(thefuck --alias)"
+    fuck "$@"
+}
