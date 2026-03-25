@@ -36,13 +36,14 @@ jobs:
           [data.user.git]
           name = "Test User"
           email = "test@example.com"
+          signingkey = "ssh-ed25519 AAAA_TEST_KEY"
           TOML
 
       - name: Validate templates
         run: |
           echo "=== Validating templates for hosttype=${{ matrix.hosttype }} ==="
           failed=0
-          for target in ~/.zshrc ~/.aliases.zsh ~/.gitconfig ~/.1password-setup.zsh ~/.antigenrc; do
+          for target in ~/.zshrc ~/.aliases.zsh ~/.gitconfig ~/.gitconfig-personal ~/.1password-setup.zsh ~/.antigenrc; do
             name=$(basename "$target")
             if chezmoi --source="${PWD}" cat "$target" > /dev/null 2>&1; then
               echo "$name OK"
