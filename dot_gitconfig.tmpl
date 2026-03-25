@@ -1,9 +1,24 @@
 [user]
 	email = {{ .user.git.email }}
 	name = {{ .user.git.name }}
+	signingkey = {{ .user.git.signingkey }}
+
+{{- if eq .hosttype "wsl" }}
 
 [core]
 {{ template "git-ssh-command.tmpl" . }}
+{{- end }}
+
+[gpg]
+	format = ssh
+
+{{- if eq .hosttype "mac" }}
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+{{- end }}
+
+[commit]
+	gpgsign = true
 
 [push]
 	autoSetupRemote = true
@@ -15,4 +30,10 @@
 	colorMoved = default
 
 [init]
-	defaultBranch = main
+	defaultBranch = master
+
+[includeIf "hasconfig:remote.*.url:git@github.com:HubertLipinski/**"]
+	path = ~/.gitconfig-personal
+
+[includeIf "hasconfig:remote.*.url:https://github.com/HubertLipinski/**"]
+	path = ~/.gitconfig-personal
