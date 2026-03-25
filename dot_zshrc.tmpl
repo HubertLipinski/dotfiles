@@ -36,11 +36,11 @@ source ~/.aliases.zsh
 source ~/.1password-setup.zsh
 {{- end }}
 
-# Zoxide
-{{ template "zoxide-init.tmpl" . }}
-
 # Thefuck
 {{ template "thefuck-init.tmpl" . }}
 
 # FZF
 {{ template "fzf-config.tmpl" . }}
+
+# Zoxide (must be last — overrides cd)
+{{ template "zoxide-init.tmpl" . }}

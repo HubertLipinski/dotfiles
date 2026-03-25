@@ -8,6 +8,7 @@
 
 {{- $name := promptStringOnce . "user.git.name" "[GitHub] Name" -}}
 {{- $email := promptStringOnce . "user.git.email" "[GitHub] Email" -}}
+{{- $signingkey := promptStringOnce . "user.git.signingkey" "[GitHub] SSH signing key (public key)" -}}
 
 [data]
 hosttype = {{ $hosttype | quote }}
@@ -16,6 +17,7 @@ windows_npiperelayPath = {{ $windows_npiperelayPath | quote }}
 [data.user.git]
 name = {{ $name | quote }}
 email = {{ $email | quote }}
+signingkey = {{ $signingkey | quote }}
 
 {{ if lookPath "code" -}}
 # chezmoi editor
