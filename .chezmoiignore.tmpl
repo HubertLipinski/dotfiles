@@ -1,7 +1,7 @@
 README.md
 1Password_WSL.md
 
-{{ if ne .chezmoi.os "linux" }}
+{{ if not (eq .chezmoi.os "linux" "darwin") }}
 **/*.sh
 {{ end }}
 

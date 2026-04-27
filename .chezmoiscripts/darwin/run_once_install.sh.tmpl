@@ -33,8 +33,11 @@ fnm install --lts
 fnm default lts-latest
 eval "$(fnm env --shell bash)"
 
-# Install Claude Code
-npm install -g @anthropic-ai/claude-code
+# Install Claude Code (native installer, no npm)
+if ! command -v claude >/dev/null 2>&1; then
+    echo "Installing Claude Code..."
+    curl -fsSL claude.ai/install.sh | bash
+fi
 
 # Symlink antigen from brew (no separate download needed)
 ln -sf "$(brew --prefix)/share/antigen/antigen.zsh" ~/antigen.zsh
